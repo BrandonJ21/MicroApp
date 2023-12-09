@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import connectionApi from '../../api/connectionApi';
 import { AuthContext } from './AuthContext';
-import { mutate } from 'swr';
+// import { mutate } from 'swr';
 
 
 //status: 'checking' | 'authenticated' | 'not_authenticated';
@@ -19,59 +19,59 @@ export const AuthProvider = ({ children }) => {
 
     const [state, setState] = useState(AUTH_INITIAL_STATE);
 
-    useEffect(() => {
-        checkToken();
-    }, [])
+    // useEffect(() => {
+    //     checkToken();
+    // }, [])
 
+  
+    // const checkToken = useCallback(async () => {
+    //     const token = localStorage.getItem('token');
+    //     // Si no existe el token
+    //     if (!token) {
+    //         return setState({
+    //             ...state,
+    //             status: 'not_authenticated',
+    //             token: null,
+    //             usuario: null,
+    //             logged: false,
+    //         });
 
-    const checkToken = useCallback(async () => {
-        const token = localStorage.getItem('token');
-        // Si no existe el token
-        if (!token) {
-            return setState({
-                ...state,
-                status: 'not_authenticated',
-                token: null,
-                usuario: null,
-                logged: false,
-            });
+    //     }
+    //     try {
+    //         // Si existe el token
+    //         const resp = await connectionApi.get('/auth/check');
+    //         if (resp.status !== 200) {
+    //             // console.log('not status 200')
+    //             return setState({
+    //                 ...state,
+    //                 status: 'not_authenticated',
+    //                 token: null,
+    //                 usuario: null,
+    //                 logged: false,
+    //             });
+    //         }
+    //         localStorage.setItem('token', resp.data.token);
+    //         return setState({
+    //             ...state,
+    //             token: resp.data.token,
+    //             usuario: resp.data.user,
+    //             logged: true,
+    //             status: 'authenticated',
+    //             errorMessage: '',
+    //         })
 
-        }
-        try {
-            // Si existe el token
-            const resp = await connectionApi.get('/auth/check');
-            if (resp.status !== 200) {
-                // console.log('not status 200')
-                return setState({
-                    ...state,
-                    status: 'not_authenticated',
-                    token: null,
-                    usuario: null,
-                    logged: false,
-                });
-            }
-            localStorage.setItem('token', resp.data.token);
-            return setState({
-                ...state,
-                token: resp.data.token,
-                usuario: resp.data.user,
-                logged: true,
-                status: 'authenticated',
-                errorMessage: '',
-            })
-
-        } catch (error) {
-            // console.log(error);
-            localStorage.removeItem('token')
-            return setState({
-                ...state,
-                status: 'not_authenticated',
-                token: null,
-                usuario: null,
-                logged: false,
-            });
-        }
-    })
+    //     } catch (error) {
+    //         // console.log(error);
+    //         localStorage.removeItem('token')
+    //         return setState({
+    //             ...state,
+    //             status: 'not_authenticated',
+    //             token: null,
+    //             usuario: null,
+    //             logged: false,
+    //         });
+    //     }
+    // })
 
     const singIn = async ({ email, password }) => {
         try {
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
                 errorMessage: '',
             })
 
-            localStorage.setItem('token', data.token);
+            // localStorage.setItem('token', data.token);
 
             return true;
 
@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
         setState({
             ...state,
             status: 'not_authenticated',
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await connectionApi.delete(`/auth/${id}`);
 
-            await mutate([`http://localhost:8000/api/auth?limit=5&page=1`, state.token]);
+            // await mutate([`http://localhost:8000/api/auth?limit=5&page=1`, state.token]);
 
         } catch (error) {
             console.log(error);
@@ -128,7 +128,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { nombre, apellido, email, telefono } = rest[0];
             const { data } = await connectionApi.post('/auth/register', { nombre, apellido, email, telefono, password: '123456' });
-            await mutate([`http://localhost:8000/api/auth?limit=5&page=1`, state.token]);
+            // await mutate([`http://localhost:8000/api/auth?limit=5&page=1`, state.token]);
 
 
         } catch (error) {
