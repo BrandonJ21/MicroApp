@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Image
 } from "react-native";
 
 export const Login = () => {
@@ -26,31 +27,34 @@ export const Login = () => {
   };
 
   return (
-    <View style={styles.continue}>
+    <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={{...styles.textCard, fontSize:40}}>Micro App</Text>
+        <Text style={{...styles.textCard, fontSize:40}}>Micro App
+        <Image 
+          style={styles.logo}
+          source={require('../assets/bus.png')}/></Text>
         <View>
           <Text style={styles.textCard}>Correo:</Text>
-
           <TextInput
             style={styles.textInput}
             placeholder="Correo electrónico"
             placeholderTextColor={"#0e4e9c"}
             value={email}
-            onChangeText={(value) => onChange(value, "email")}
+            onChangeText={(value) => 
+            onChange(value, "email")}
             keyboardType="email-address"
           />
         </View>
         <View>
           <Text style={styles.textCard}>Contraseña:</Text>
-          <TextInput secureTextEntry 
+          <TextInput 
+            secureTextEntry 
             style={styles.textInput}
             placeholder="Contraseña"
             placeholderTextColor={"#0e4e9c"}
             autoCorrect={false}
             value={password}
             onChangeText={(value) => onChange(value, "password")}
-            keyboardType="visible-password"
           />
         </View>
         <View>
@@ -68,10 +72,8 @@ export const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  continue: {
+  container: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   card: {
     width: "90%",
@@ -110,4 +112,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#0c4e9c",
   },
+  logo:{
+    height:60,
+    width:60,
+  },
+  stylelogo:{
+    
+  }
 });
