@@ -28,15 +28,29 @@ export const HistorialProvider = ({ children }) => {
     try {
       const fecha_hora = new Date()
       const { data } = await connectionApi.post('/historial', {fecha_hora, guiaDespachoId});
-
-      setState({
-        ...state,
-        historial: data.historial
-      });
+      if (data) {
+        console.log('creeacion de historial ' + data.historial.id)
+        setState({
+          ...state,
+          historial: data.historial
+        });
+      }
 
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const crearTrazoViaje = async (latitud, longitud, historialId) => {
+    try {
+      // console.log(historialId, latitud, longitud);
+      const { data } = await connectionApi.post('/trazoViaje', {historialId,latitud, longitud });
+      console.log(data);
+      
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   return (
@@ -46,6 +60,7 @@ export const HistorialProvider = ({ children }) => {
 
         obtenerGuiaDespacho,
         crearHistorial,
+        crearTrazoViaje,
       }}
     >
       {children}

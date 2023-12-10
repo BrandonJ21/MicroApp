@@ -1,21 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as Location from "expo-location";
-import { AuthContext } from "../context/auth/AuthContext";
 import { PickerDespacho } from "../component/Picker";
+import { HistorialContext, AuthContext } from "../context";
 
-export const Inicio = ({navigation}) => {
+export const Viaje = ({ navigation }) => {
   const { logout, usuario } = useContext(AuthContext);
+  const { crearTrazoViaje, historial } = useContext(HistorialContext);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
-  // const [selectedLanguage, setSelectedLanguage] = useState();
+  const [onGetLocation, setOnGetLocation] = useState(false);
 
   const [status, setStatus] = useState(null);
 
@@ -30,23 +25,27 @@ export const Inicio = ({navigation}) => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location);
     })();
   }, []);
 
   useEffect(() => {
-    // const intervalId = setInterval(() => {
-    //   getLocation();
-    // }, 5000);
-
-    // return () => clearInterval(intervalId);
-  }, []);
+    if (Object.keys(historial).length === 0) return;
+    if (!onGetLocation) return;
+    const intervalId = setInterval(() => {
+      getLocation();
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, [onGetLocation]);
 
   const getLocation = async () => {
     try {
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location.coords.latitude, location.coords.longitude);
+      crearTrazoViaje(
+        location.coords.latitude,
+        location.coords.longitude,
+        historial.id
+      );
     } catch (error) {
       console.error("Error al obtener la ubicación: ", error);
     }
@@ -63,35 +62,36 @@ export const Inicio = ({navigation}) => {
       <View style={styles.header}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={getLocation}
+          onPress={() => setOnGetLocation(!onGetLocation)}
           style={styles.button}
         >
-          <Text style={styles.textButton}>Iniciar Viaje</Text>
+          <Text style={styles.textButton}>
+            {onGetLocation ? "Detener Viaje" : "Iniciar Viaje"}
+          </Text>
           <View style={styles.cardubicacion}>
             <Text style={styles.cardubitext}>{text}</Text>
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.bodydetviaje}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.buttonDetener}>
-          <Text style={styles.textdetener}>Guias de Despacho</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{...styles.cardDetalles, zIndex: 99}}>
+      <View style={{ ...styles.cardDetalles, zIndex: 99 }}>
         <View style={styles.info}>
-          <Text style={styles.infodetalles}>Nombre: {usuario ?  usuario.nombre : ''} </Text>
+          <Text style={styles.infodetalles}>
+            Nombre: {usuario ? usuario.nombre : ""}{" "}
+          </Text>
 
           {/* <Text style={styles.infodetalles}>Diego</Text> */}
         </View>
         <View style={styles.info}>
-          <Text style={styles.infodetalles}>Apellido: {usuario ?  usuario.apellido : ''}</Text>
+          <Text style={styles.infodetalles}>
+            Apellido: {usuario ? usuario.apellido : ""}
+          </Text>
           {/* <Text style={styles.infodetalles}>Maradona</Text> */}
         </View>
       </View>
       <View style={styles.bodydetviaje}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => navigation.replace('GuiaDespacho')}
+          onPress={() => navigation.replace("GuiaDespacho")}
           style={styles.buttonDetener}
         >
           <Text style={styles.textdetener}>Volver</Text>

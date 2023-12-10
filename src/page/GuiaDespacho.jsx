@@ -16,6 +16,7 @@ export const GuiaDespacho = ({navigation}) => {
   }
 
   const insertarHistorial = () => {
+    if (!despachoId) return;
     crearHistorial(despachoId);
     
     navigation.replace('Inicio');

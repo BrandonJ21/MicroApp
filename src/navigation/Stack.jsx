@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Inicio } from "../page/Inicio";
+import { Viaje } from "../page/Inicio";
 import { Login } from "../page/Login";
 import { AuthContext } from "../context/auth/AuthContext";
 import { GuiaDespacho } from "../page/GuiaDespacho";
@@ -18,14 +18,14 @@ export const StackNavigation = () => {
         headerShown: false,
       }}
     >
-      {/* {status !== "authenticated" ? (
+      {status !== "authenticated" ? (
         <Stack.Screen name="Login" component={Login} />
       ) : (
-        <> */}
+        <>
           <Stack.Screen name="GuiaDespacho" component={GuiaDespacho} />
-          <Stack.Screen name="Inicio" component={Inicio} />
-        {/* </> */}
-      {/* // )} */}
+          <Stack.Screen name="Inicio" component={Viaje} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };

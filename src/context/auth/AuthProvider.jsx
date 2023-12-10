@@ -78,7 +78,6 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(data.user);
       setState({
         ...state,
         token: data.token,
