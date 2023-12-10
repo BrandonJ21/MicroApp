@@ -1,10 +1,14 @@
 import { StyleSheet, View } from "react-native";
-import { AuthProvider } from "./src/context/auth/AuthProvider";
 import { NavigationContainer } from "@react-navigation/native";
 import { StackNavigation } from "./src/navigation/Stack";
+import { AuthProvider, HistorialProvider } from "./src/context";
 
 const AppState = ({ children }) => {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <HistorialProvider>{children}</HistorialProvider>
+    </AuthProvider>
+  );
 };
 
 export default function App() {

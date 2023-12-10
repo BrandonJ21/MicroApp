@@ -3,20 +3,20 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity
 } from "react-native";
 import * as Location from "expo-location";
 import { AuthContext } from "../context/auth/AuthContext";
 import { PickerDespacho } from "../component/Picker";
 
-export const Inicio = () => {
+export const Inicio = ({navigation}) => {
   const { logout, usuario } = useContext(AuthContext);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  // const [selectedLanguage, setSelectedLanguage] = useState();
+
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export const Inicio = () => {
       </View>
       <View style={styles.bodydetviaje}>
         <TouchableOpacity activeOpacity={0.8} style={styles.buttonDetener}>
-          <Text style={styles.textdetener}>Detener viaje</Text>
+          <Text style={styles.textdetener}>Guias de Despacho</Text>
         </TouchableOpacity>
       </View>
       <View style={{...styles.cardDetalles, zIndex: 99}}>
@@ -87,19 +87,14 @@ export const Inicio = () => {
           <Text style={styles.infodetalles}>Apellido: {usuario ?  usuario.apellido : ''}</Text>
           {/* <Text style={styles.infodetalles}>Maradona</Text> */}
         </View>
-        <View style={{...styles.info, height: 100}}>
-          {/* <Text style={styles.infodetalles}>Guia de Despacho:</Text> */}
-          <PickerDespacho />
-          {/* <Text style={styles.infodetalles}>Tu amita</Text> */}
-        </View>
       </View>
       <View style={styles.bodydetviaje}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={logout}
+          onPress={() => navigation.replace('GuiaDespacho')}
           style={styles.buttonDetener}
         >
-          <Text style={styles.textdetener}>Salir</Text>
+          <Text style={styles.textdetener}>Volver</Text>
         </TouchableOpacity>
       </View>
     </View>
