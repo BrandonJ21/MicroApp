@@ -14,11 +14,11 @@ export const PickerDespacho = () => {
       open={open}
       items={items}
       setOpen={setOpen}
-      value={value}
+      value={value || ''}
       setValue={setValue}
       setItems={setItems}
       autoScroll
-      placeholder={"tu amita"}
+      placeholder={"Seleciona una guía"}
       placeholderStyle={{ color: 'blue' }}
     />
   );
