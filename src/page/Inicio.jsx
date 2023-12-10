@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
+import { AuthContext } from "../context/auth/AuthContext";
 
 export const Inicio = () => {
+  const { logout } = useContext(AuthContext);
+
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
     
@@ -84,7 +87,9 @@ export const Inicio = () => {
       <View style={styles.bodydetviaje}>
         <TouchableOpacity 
         activeOpacity={0.8}
-        style={styles.buttonDetener}>
+        onPress={logout}
+        style={styles.buttonDetener}
+        >
         <Text style={styles.textdetener}>
           Salir
           </Text>

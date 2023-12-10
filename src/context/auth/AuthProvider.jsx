@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import connectionApi from '../../api/connectionApi';
 import { AuthContext } from './AuthContext';
-// import { mutate } from 'swr';
 
 
 //status: 'checking' | 'authenticated' | 'not_authenticated';
@@ -76,6 +77,7 @@ export const AuthProvider = ({ children }) => {
     const singIn = async ({ email, password }) => {
         try {
             const { data } = await connectionApi.post('/auth/login', { email, password });
+            console.log(data);
             setState({
                 ...state,
                 token: data.token,
@@ -85,7 +87,7 @@ export const AuthProvider = ({ children }) => {
                 errorMessage: '',
             })
 
-            // localStorage.setItem('token', data.token);
+            AsyncStorage.setItem('token', data.token);
 
             return true;
 
@@ -102,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        // localStorage.removeItem('token');
+        AsyncStorage.removeItem('token');
         setState({
             ...state,
             status: 'not_authenticated',

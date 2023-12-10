@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 
+import { AuthContext } from "../context/auth/AuthContext";
+
 export const Login = () => {
+  const { singIn } = useContext(AuthContext);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -16,7 +20,7 @@ export const Login = () => {
   const { email, password } = form;
 
   const onPress = () => {
-    console.log({ form });
+    singIn( form );
   };
 
   const onChange = (value, field) => {
@@ -29,10 +33,10 @@ export const Login = () => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={{...styles.textCard, fontSize:40}}>Micro App
-        <Image 
-          style={styles.logo}
-          source={require('../assets/bus.png')}/></Text>
+        <Text style={{ ...styles.textCard, fontSize: 40 }}>
+          Micro App
+          <Image style={styles.logo} source={require("../assets/bus.png")} />
+        </Text>
         <View>
           <Text style={styles.textCard}>Correo:</Text>
           <TextInput
@@ -40,15 +44,15 @@ export const Login = () => {
             placeholder="Correo electrónico"
             placeholderTextColor={"#0e4e9c"}
             value={email}
-            onChangeText={(value) => 
-            onChange(value, "email")}
+            onChangeText={(value) => onChange(value, "email")}
             keyboardType="email-address"
+            autoCapitalize="none"
           />
         </View>
         <View>
           <Text style={styles.textCard}>Contraseña:</Text>
-          <TextInput 
-            secureTextEntry 
+          <TextInput
+            secureTextEntry
             style={styles.textInput}
             placeholder="Contraseña"
             placeholderTextColor={"#0e4e9c"}
@@ -63,7 +67,7 @@ export const Login = () => {
             onPress={onPress}
             style={styles.button}
           >
-            <Text style={styles.textButton}>Iniciar</Text>
+            <Text style={styles.textButton}>Ingresar</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#125098",
     borderRadius: 15,
     padding: 20,
-    marginTop: '30%',
+    marginTop: "30%",
     margin: 20,
   },
   textCard: {
@@ -112,11 +116,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#0c4e9c",
   },
-  logo:{
-    height:60,
-    width:60,
+  logo: {
+    height: 60,
+    width: 60,
   },
-  stylelogo:{
-    
-  }
+  stylelogo: {},
 });

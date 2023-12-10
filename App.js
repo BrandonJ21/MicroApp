@@ -1,16 +1,22 @@
 import { StyleSheet, View } from "react-native";
-import { Inicio } from "./src/page/Inicio";
-import { Login } from "./src/page/Login";
+import { AuthProvider } from "./src/context/auth/AuthProvider";
+import { NavigationContainer } from "@react-navigation/native";
+import { StackNavigation } from "./src/navigation/Stack";
+
+const AppState = ({ children }) => {
+  return <AuthProvider>{children}</AuthProvider>;
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Login />
-    </View>
+    <NavigationContainer>
+      <AppState>
+        <StackNavigation />
+      </AppState>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
 });
