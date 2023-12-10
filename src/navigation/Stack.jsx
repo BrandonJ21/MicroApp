@@ -10,7 +10,6 @@ const Stack = createStackNavigator();
 export const StackNavigation = () => {
   const { status } = useContext(AuthContext);
 
-  console.log(status);
   return (
     <Stack.Navigator
       initialRouteName="Login"

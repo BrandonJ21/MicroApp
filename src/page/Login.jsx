@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,25 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 
 import { AuthContext } from "../context/auth/AuthContext";
 
 export const Login = () => {
-  const { singIn } = useContext(AuthContext);
+  const { singIn, removeError, errorMessage } = useContext(AuthContext);
+
+
+  useEffect(() => {
+    if (!errorMessage && errorMessage.length === 0) return;
+  
+    Alert.alert('Login Incorrecto', errorMessage , [{
+      text: 'Aceptar',
+      onPress: () => removeError()
+    }]);
+  }, [errorMessage])
+  
+
 
   const [form, setForm] = useState({
     email: "",
